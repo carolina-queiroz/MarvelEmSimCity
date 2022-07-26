@@ -48,12 +48,12 @@ class RegisterViewModel : ViewModel() {
 
     internal fun registerUser(user: User) {
         try {
-            AuthenticationRepository().registerUser(
+            authenticationRepository.registerUser(
                 user.email,
                 user.password
             ).addOnSuccessListener {
 
-                AuthenticationRepository().updateUserProfile(user.name)?.addOnSuccessListener {
+                authenticationRepository.updateUserProfile(user.name)?.addOnSuccessListener {
                     _registerState.value = user
                 }
 
