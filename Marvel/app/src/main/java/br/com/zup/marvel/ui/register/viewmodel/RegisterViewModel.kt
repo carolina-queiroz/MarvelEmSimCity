@@ -8,7 +8,7 @@ import br.com.zup.marvel.domain.model.User
 import br.com.zup.marvel.domain.repository.AuthenticationRepository
 
 class RegisterViewModel : ViewModel() {
-    //private val authenticationRepository = AuthenticationRepository()
+    private val authenticationRepository = AuthenticationRepository()
 
     private var _registerState = MutableLiveData<User>()
     val registerState: LiveData<User> = _registerState
@@ -38,7 +38,7 @@ class RegisterViewModel : ViewModel() {
                     user.email.contains(".com") ||
                     user.email.contains(".br")
                 )
-                    //registerUser(user)
+                    registerUser(user)
                 else {
                     _errorState.value = INVALID_EMAIL
                 }
