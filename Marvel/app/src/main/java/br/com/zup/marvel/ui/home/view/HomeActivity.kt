@@ -33,7 +33,13 @@ class HomeActivity : AppCompatActivity() {
 
         viewModel.getListMarvel()
         setUpRecyclerView()
+        showUserData()
         initObserver()
+    }
+
+    private fun showUserData(){
+        val name = viewModel.getUserName()
+        binding.textView.text = getString(R.string.texto_home, name)
     }
 
     private fun setUpRecyclerView() {

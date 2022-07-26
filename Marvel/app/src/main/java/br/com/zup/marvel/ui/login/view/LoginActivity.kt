@@ -1,10 +1,9 @@
 package br.com.zup.marvel.ui.login.view
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import br.com.zup.marvel.R
 import br.com.zup.marvel.USER_KEY
 import br.com.zup.marvel.databinding.ActivityLoginBinding
 import br.com.zup.marvel.domain.model.User
