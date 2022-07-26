@@ -3,6 +3,7 @@ package br.com.zup.marvel.ui.register.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -40,7 +41,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         viewModel.errorState.observe(this) {
-            Snackbar.make(binding.root, it, Snackbar.LENGTH_LONG).show()
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
     }
 
