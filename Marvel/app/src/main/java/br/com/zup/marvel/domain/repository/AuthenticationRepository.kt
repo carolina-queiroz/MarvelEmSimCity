@@ -29,6 +29,6 @@ class AuthenticationRepository {
 
     fun getCurrentUser() = auth.currentUser
 
-    fun getNameUser(): String = auth.currentUser?.displayName.toString()
+    fun getUserName(): String = auth.currentUser?.displayName.toString()
 
 }

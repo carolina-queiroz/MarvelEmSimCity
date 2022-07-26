@@ -21,5 +21,5 @@ class HomeViewModel: ViewModel() {
 
     fun logout() = authenticationRepository.logoutOut()
 
-    fun getUserName() = authenticationRepository.getNameUser()
+    fun getUserName() = authenticationRepository.getUserName()
 }
