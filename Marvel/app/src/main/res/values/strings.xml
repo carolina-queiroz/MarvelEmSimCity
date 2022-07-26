@@ -16,4 +16,5 @@
     <string name="login_txt">login</string>
     <string name="nome_txt">Nome</string>
     <string name="registrar_conta_txt">registrar conta</string>
+    <string name="exit">sair</string>
 </resources>
