@@ -8,7 +8,7 @@ import br.com.zup.marvel.domain.model.User
 import br.com.zup.marvel.domain.repository.AuthenticationRepository
 
 class RegisterViewModel : ViewModel() {
-    private val authenticationRepository = AuthenticationRepository()
+    //private val authenticationRepository = AuthenticationRepository()
 
     private var _registerState = MutableLiveData<User>()
     val registerState: LiveData<User> = _registerState
@@ -48,12 +48,12 @@ class RegisterViewModel : ViewModel() {
 
     internal fun registerUser(user: User) {
         try {
-            authenticationRepository.registerUser(
+            AuthenticationRepository().registerUser(
                 user.email,
                 user.password
             ).addOnSuccessListener {
 
-                authenticationRepository.updateUserProfile(user.name)?.addOnSuccessListener {
+                AuthenticationRepository().updateUserProfile(user.name)?.addOnSuccessListener {
                     _registerState.value = user
                 }
 

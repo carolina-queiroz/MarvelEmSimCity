@@ -26,7 +26,7 @@ class MarvelRepository {
         marvelList.add(
             Marvel(
                 R.drawable.mulher_invisivel,
-                MULHER_INIVISVEL_NOME,
+                MULHER_INVISIVEL_NOME,
                 MULHER_INVISVEL_DESCRICAO
             )
         )
