@@ -11,9 +11,14 @@ import br.com.zup.marvel.ui.home.view.HomeActivity
 import br.com.zup.marvel.ui.login.viewmodel.LoginViewModel
 import br.com.zup.marvel.ui.register.view.RegisterActivity
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseUser
+
+
+
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+
 
     private val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this)[LoginViewModel::class.java]
@@ -35,6 +40,12 @@ class LoginActivity : AppCompatActivity() {
 
         initObservers()
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val actualUser = viewModel.getUser()
+        actualUser?.reload()
     }
 
     private fun goRegisterUser() {

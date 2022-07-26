@@ -51,6 +51,7 @@ class HomeActivity : AppCompatActivity() {
         viewModel.marvelListState.observe(this){
             adapter.updateMarvelList(it.toMutableList())
         }
+
     }
 
     private fun goToDetail(marvel: Marvel) {

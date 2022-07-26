@@ -3,9 +3,7 @@ package br.com.zup.marvel.ui.login.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.zup.marvel.EMAIL_ERROR_MESSAGE
-import br.com.zup.marvel.LOGIN_ERROR_MESSAGE
-import br.com.zup.marvel.PASSWORD_ERROR_MESSAGE
+import br.com.zup.marvel.*
 import br.com.zup.marvel.domain.model.User
 import br.com.zup.marvel.domain.repository.AuthenticationRepository
 
@@ -41,10 +39,12 @@ class LoginViewModel : ViewModel() {
             ).addOnSuccessListener {
                 _loginState.value = user
             }.addOnFailureListener {
-                _errorState.value = LOGIN_ERROR_MESSAGE + it.message
+                _errorState.value = LOGIN_ERROR_MESSAGE
             }
-        } catch (ex: Exception) {
-            _errorState.value = ex.message
+        } catch (e: Exception) {
+            _errorState.value = e.message
         }
     }
+
+    fun getUser() = authenticationRepository.getCurrentUser()
 }

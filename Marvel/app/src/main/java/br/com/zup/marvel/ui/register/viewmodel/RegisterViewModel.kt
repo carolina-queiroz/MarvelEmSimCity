@@ -3,14 +3,11 @@ package br.com.zup.marvel.ui.register.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.zup.marvel.CREATE_USER_ERROR_MESSAGE
-import br.com.zup.marvel.EMAIL_ERROR_MESSAGE
-import br.com.zup.marvel.NAME_ERROR_MESSAGE
-import br.com.zup.marvel.PASSWORD_ERROR_MESSAGE
+import br.com.zup.marvel.*
 import br.com.zup.marvel.domain.model.User
 import br.com.zup.marvel.domain.repository.AuthenticationRepository
 
-class RegisterViewModel: ViewModel() {
+class RegisterViewModel : ViewModel() {
     private val authenticationRepository = AuthenticationRepository()
 
     private var _registerState = MutableLiveData<User>()
@@ -30,8 +27,21 @@ class RegisterViewModel: ViewModel() {
             user.password.isEmpty() -> {
                 _errorState.value = PASSWORD_ERROR_MESSAGE
             }
+            user.name.length < 3 -> {
+                _errorState.value = ERROR_VALIDATE_NAME
+            }
+            user.password.length < 8 -> {
+                _errorState.value = ERROR_VALIDATE_PASSWORD
+            }
             else -> {
-                registerUser(user)
+                if (user.email.contains("@") &&
+                    user.email.contains(".com") ||
+                    user.email.contains(".br")
+                )
+                    registerUser(user)
+                else {
+                    _errorState.value = INVALID_EMAIL
+                }
             }
         }
     }
@@ -48,10 +58,10 @@ class RegisterViewModel: ViewModel() {
                 }
 
             }.addOnFailureListener {
-                _errorState.value = CREATE_USER_ERROR_MESSAGE + it.message
+                _errorState.value = CREATE_USER_ERROR_MESSAGE
             }
-        } catch (ex: Exception) {
-            _errorState.value = ex.message
+        } catch (e: Exception) {
+            _errorState.value = e.message
         }
     }
 }
