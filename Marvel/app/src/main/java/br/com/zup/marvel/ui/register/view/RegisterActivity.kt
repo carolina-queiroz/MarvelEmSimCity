@@ -4,16 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import br.com.zup.marvel.*
 import br.com.zup.marvel.databinding.ActivityRegisterBinding
 import br.com.zup.marvel.domain.model.User
-import br.com.zup.marvel.domain.repository.AuthenticationRepository
 import br.com.zup.marvel.ui.home.view.HomeActivity
 import br.com.zup.marvel.ui.register.viewmodel.RegisterViewModel
-import com.google.android.material.snackbar.Snackbar
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -26,10 +22,11 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.title = REGISTER
 
         binding.btnRegisterAccount.setOnClickListener {
             val user = getUserData()
-            viewModel.validateDataUser(user)
+            viewModel.validateUserData(user)
         }
 
         initObservers()

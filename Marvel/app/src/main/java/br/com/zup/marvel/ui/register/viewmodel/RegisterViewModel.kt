@@ -16,7 +16,7 @@ class RegisterViewModel : ViewModel() {
     private var _errorState = MutableLiveData<String>()
     val errorState: LiveData<String> = _errorState
 
-    fun validateDataUser(user: User) {
+    fun validateUserData(user: User) {
         when {
             user.name.isEmpty() -> {
                 _errorState.value = NAME_ERROR_MESSAGE
@@ -46,7 +46,7 @@ class RegisterViewModel : ViewModel() {
         }
     }
 
-    private fun registerUser(user: User) {
+    internal fun registerUser(user: User) {
         try {
             authenticationRepository.registerUser(
                 user.email,

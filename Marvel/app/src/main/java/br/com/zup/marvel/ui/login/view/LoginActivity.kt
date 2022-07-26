@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import br.com.zup.marvel.LOGIN
+import br.com.zup.marvel.REGISTER
 import br.com.zup.marvel.USER_KEY
 import br.com.zup.marvel.databinding.ActivityLoginBinding
 import br.com.zup.marvel.domain.model.User
@@ -29,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.title = LOGIN
 
         binding.tvCreateAccount.setOnClickListener {
             goRegisterUser()
