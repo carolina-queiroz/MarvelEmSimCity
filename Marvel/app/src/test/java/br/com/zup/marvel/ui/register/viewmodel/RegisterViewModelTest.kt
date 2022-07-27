@@ -1,58 +1,95 @@
 package br.com.zup.marvel.ui.register.viewmodel
 
-import br.com.zup.marvel.NAME_ERROR_MESSAGE
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import br.com.zup.marvel.*
 import br.com.zup.marvel.domain.model.User
 import br.com.zup.marvel.domain.repository.AuthenticationRepository
+import br.com.zup.marvel.domain.repository.AuthenticationRepositoryFactory
+import io.mockk.*
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
-import org.mockito.MockitoAnnotations
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
-class RegisterViewModelTest{
+@RunWith(AndroidJUnit4::class)
+class RegisterViewModelTest {
 
-    @Mock
-    private lateinit var authenticationRepository : AuthenticationRepository
+    private val repository: AuthenticationRepository = mockk(relaxed = true)
 
     @Before
     fun setup() {
-        MockitoAnnotations.openMocks(this)
-        authenticationRepository = AuthenticationRepository()
+        mockkObject(AuthenticationRepositoryFactory)
+        every { AuthenticationRepositoryFactory.create() } returns repository
+        every { repository.registerUser(any(), any()) } returns mockk(relaxed = true)
+    }
+
+    @After
+    fun tearDown() {
+        unmockkAll()
     }
 
     @Test
     fun validateUserData_emptyName_returnErrorMessage() {
-
-        val userMock = User(
-            name = "",
-            email = "1@2.com",
-            password = "11111111"
-        )
-
-        val errorMock = NAME_ERROR_MESSAGE
-
-        val result = RegisterViewModel().validateUserData(userMock)
-
-        assert(result.equals(errorMock))
-
+        val viewModel = RegisterViewModel()
+        viewModel.validateUserData(user = User(name = ""))
+        assert(viewModel.errorState.value == NAME_ERROR_MESSAGE)
     }
 
     @Test
     fun validateUserData_emptyEmail_returnErrorMessage() {
-        val userMock = User(
-            name = "",
-            email = "1@2.com",
-            password = "11111111"
+        val viewModel = RegisterViewModel()
+        viewModel.validateUserData(user = User(name = "Joana", email = ""))
+        assert(viewModel.errorState.value == EMAIL_ERROR_MESSAGE)
+    }
+
+    @Test
+    fun validateUserData_emptyPassword_returnErrorMessage() {
+        val viewModel = RegisterViewModel()
+        viewModel.validateUserData(
+            user = User(
+                name = "Joana",
+                email = "jo@gmail.com",
+                password = ""
+            )
         )
+        assert(viewModel.errorState.value == PASSWORD_ERROR_MESSAGE)
+    }
 
-        val errorMock = NAME_ERROR_MESSAGE
+    @Test
+    fun validateUserData_nameLessThenThreeCharacters_returnErrorMessage() {
+        val viewModel = RegisterViewModel()
+        viewModel.validateUserData(user = User(name = "Jo", email = "jo@gmail.com", password = "1"))
+        assert(viewModel.errorState.value == ERROR_VALIDATE_NAME)
+    }
 
-        val result = RegisterViewModel().validateUserData(userMock)
+    @Test
+    fun validateUserData_passwordLessThanEightCharacters_returnErrorMessage() {
+        val viewModel = RegisterViewModel()
+        viewModel.validateUserData(
+            user = User(
+                name = "Joana",
+                email = "jo@gmail.com",
+                password = "1234567"
+            )
+        )
+        assert(viewModel.errorState.value == ERROR_VALIDATE_PASSWORD)
+    }
 
-        assert(result.equals(errorMock))
-
+    @Test
+    fun validateUserData_allFieldsCorrect_returnRegisterUser() {
+        val viewModel = RegisterViewModel()
+        val user = User(
+            name = "Joana",
+            email = "jo@gmail.com",
+            password = "12345678"
+        )
+        viewModel.validateUserData(user)
+        verify {
+            repository.registerUser(
+                user.email,
+                user.password
+            )
+        }
     }
 
 }
