@@ -10,7 +10,9 @@ import br.com.zup.marvel.domain.repository.AuthenticationRepository
 import br.com.zup.marvel.domain.repository.AuthenticationRepositoryFactory
 
 class RegisterViewModel : ViewModel() {
-    private lateinit var authenticationRepository: AuthenticationRepository
+    private val authenticationRepository : AuthenticationRepository by lazy {
+        AuthenticationRepositoryFactory.create()
+    }
 
     private var _registerState = MutableLiveData<User>()
     val registerState: LiveData<User> = _registerState
@@ -58,7 +60,6 @@ class RegisterViewModel : ViewModel() {
     }
 
     fun registerUser(user: User) {
-        authenticationRepository = AuthenticationRepositoryFactory.create()
         if (validateUserData(user)) {
             try {
                 authenticationRepository.registerUser(
