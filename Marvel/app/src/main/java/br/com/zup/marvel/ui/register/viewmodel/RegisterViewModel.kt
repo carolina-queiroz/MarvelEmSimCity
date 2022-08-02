@@ -1,5 +1,6 @@
 package br.com.zup.marvel.ui.register.viewmodel
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -42,20 +43,14 @@ class RegisterViewModel : ViewModel() {
                 _errorState.value = ERROR_VALIDATE_PASSWORD
                 return false
             }
-            else -> {
-                if (user.email.contains("@") &&
-                    user.email.contains(".com") ||
-                    user.email.contains(".br")
-                )
-                {
-                return true
-                }
-
-                else {
-                    _errorState.value = INVALID_EMAIL
-                    return false
-                }
+            Patterns.EMAIL_ADDRESS.matcher(user.email).matches().not() ->{
+                _errorState.value = INVALID_EMAIL
+                return false
             }
+            else -> {
+                return true
+            }
+
         }
     }
 
