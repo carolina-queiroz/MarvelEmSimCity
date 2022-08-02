@@ -26,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.btnRegisterAccount.setOnClickListener {
             val user = getUserData()
-            viewModel.validateUserData(user)
+            viewModel.registerUser(user)
         }
 
         initObservers()

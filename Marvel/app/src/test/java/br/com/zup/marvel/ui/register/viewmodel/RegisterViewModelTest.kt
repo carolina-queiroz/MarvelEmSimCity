@@ -14,20 +14,6 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class RegisterViewModelTest {
 
-    private val repository: AuthenticationRepository = mockk(relaxed = true)
-
-    @Before
-    fun setup() {
-        mockkObject(AuthenticationRepositoryFactory)
-        every { AuthenticationRepositoryFactory.create() } returns repository
-        every { repository.registerUser(any(), any()) } returns mockk(relaxed = true)
-    }
-
-    @After
-    fun tearDown() {
-        unmockkAll()
-    }
-
     @Test
     fun validateUserData_emptyName_returnErrorMessage() {
         val viewModel = RegisterViewModel()
@@ -83,13 +69,7 @@ class RegisterViewModelTest {
             email = "jo@gmail.com",
             password = "12345678"
         )
-        viewModel.validateUserData(user)
-        verify {
-            repository.registerUser(
-                user.email,
-                user.password
-            )
-        }
+        assert(viewModel.validateUserData(user))
     }
 
 }
