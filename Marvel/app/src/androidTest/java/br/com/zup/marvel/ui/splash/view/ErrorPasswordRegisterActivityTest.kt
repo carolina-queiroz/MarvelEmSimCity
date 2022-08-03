@@ -21,14 +21,14 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class ErrorEmailRegisterSplashActivityTest {
+class ErrorPasswordRegisterActivityTest {
 
     @Rule
     @JvmField
     var mActivityScenarioRule = ActivityScenarioRule(SplashActivity::class.java)
 
     @Test
-    fun errorEmailRegisterSplashActivityTest() {
+    fun errorPasswordRegisterSplashActivityTest() {
         val materialTextView = onView(
             allOf(
                 withId(R.id.tvCreateAccount), withText("Crie sua conta agora"),
@@ -69,7 +69,11 @@ class ErrorEmailRegisterSplashActivityTest {
                 )
             )
         )
-        appCompatEditText2.perform(scrollTo(), replaceText("carol"), closeSoftKeyboard())
+        appCompatEditText2.perform(
+            scrollTo(),
+            replaceText("carol@gmail.com.br"),
+            closeSoftKeyboard()
+        )
 
         val appCompatEditText3 = onView(
             allOf(
@@ -83,7 +87,7 @@ class ErrorEmailRegisterSplashActivityTest {
                 )
             )
         )
-        appCompatEditText3.perform(scrollTo(), replaceText("12345678"), closeSoftKeyboard())
+        appCompatEditText3.perform(scrollTo(), replaceText("1234"), closeSoftKeyboard())
 
         val materialButton = onView(
             allOf(

@@ -3,11 +3,6 @@ package br.com.zup.marvel.ui.register.viewmodel
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import br.com.zup.marvel.*
 import br.com.zup.marvel.domain.model.User
-import br.com.zup.marvel.domain.repository.AuthenticationRepository
-import br.com.zup.marvel.domain.repository.AuthenticationRepositoryFactory
-import io.mockk.*
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -24,7 +19,7 @@ class RegisterViewModelTest {
     @Test
     fun validateUserData_emptyEmail_returnErrorMessage() {
         val viewModel = RegisterViewModel()
-        viewModel.validateUserData(user = User(name = "Joana", email = ""))
+        viewModel.validateUserData(user = User(name = "Livia", email = ""))
         assert(viewModel.errorState.value == EMAIL_ERROR_MESSAGE)
     }
 
@@ -33,8 +28,8 @@ class RegisterViewModelTest {
         val viewModel = RegisterViewModel()
         viewModel.validateUserData(
             user = User(
-                name = "Joana",
-                email = "jo@gmail.com",
+                name = "Livia",
+                email = "li@gmail.com",
                 password = ""
             )
         )
@@ -44,7 +39,7 @@ class RegisterViewModelTest {
     @Test
     fun validateUserData_nameLessThenThreeCharacters_returnErrorMessage() {
         val viewModel = RegisterViewModel()
-        viewModel.validateUserData(user = User(name = "Jo", email = "jo@gmail.com", password = "1"))
+        viewModel.validateUserData(user = User(name = "Li", email = "li@gmail.com", password = "1"))
         assert(viewModel.errorState.value == ERROR_VALIDATE_NAME)
     }
 
@@ -53,8 +48,8 @@ class RegisterViewModelTest {
         val viewModel = RegisterViewModel()
         viewModel.validateUserData(
             user = User(
-                name = "Joana",
-                email = "jo@gmail.com",
+                name = "Livia",
+                email = "li@gmail.com",
                 password = "1234567"
             )
         )
@@ -65,8 +60,8 @@ class RegisterViewModelTest {
     fun validateUserData_allFieldsCorrect_returnRegisterUser() {
         val viewModel = RegisterViewModel()
         val user = User(
-            name = "Joana",
-            email = "jo@gmail.com",
+            name = "Livia",
+            email = "li@gmail.com",
             password = "12345678"
         )
         assert(viewModel.validateUserData(user))
